@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/settings" >
+        <ListPreference
+            android:defaultValue="6"
+            android:entries="@array/check_for_updates"
+            android:entryValues="@array/check_for_updates_values"
+            android:key="check_for_updates"
+            android:summary="@string/check_for_updates_info"
+            android:title="@string/check_for_updates" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="show_changelog"
+            android:summary="@string/show_changelog_info"
+            android:title="@string/show_changelog" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
