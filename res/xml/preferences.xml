@@ -3,17 +3,24 @@
 
     <PreferenceCategory android:title="@string/settings" >
         <ListPreference
-            android:defaultValue="6"
+            android:defaultValue="1"
             android:entries="@array/check_for_updates"
             android:entryValues="@array/check_for_updates_values"
             android:key="check_for_updates"
-            android:summary="@string/check_for_updates_info"
             android:title="@string/check_for_updates" />
+			
+		<ListPreference
+            android:defaultValue="0"
+            android:entries="@array/release_type"
+            android:entryValues="@array/release_type_values"
+            android:key="release_type"
+            android:title="@string/release_type" />
 
-        <CheckBoxPreference
-            android:defaultValue="true"
+        <ListPreference
+            android:defaultValue="2"
+            android:entries="@array/show_changelog"
+            android:entryValues="@array/show_changelog_values"
             android:key="show_changelog"
-            android:summary="@string/show_changelog_info"
             android:title="@string/show_changelog" />
     </PreferenceCategory>
 

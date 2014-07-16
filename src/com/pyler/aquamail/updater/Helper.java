@@ -10,18 +10,26 @@ import android.widget.Toast;
 
 public class Helper {
 	public String AQUAMAIL_PKG = "org.kman.AquaMail";
+	public String URL_CHANGELOG = "http://aquamailupdater.wen.ru/changelog.txt";
 	public String URL_VERSION = "http://aqua-mail.com/download/xversion-AquaMail-market.txt";
+	public String URL_VERSION_BETA = "http://aqua-mail.com/download/xversion-AquaMail-market-beta.txt";
 	public String AQUAMAIL_VERSION = "AquaMail %s";
 	public String TAG = "AquaMail Updater";
 	public String installedVersionName;
 	public String newVersionName;
-	public boolean isNewVersion;
-	public String checkForUpdates = "check_for_updates";
+	public String check_for_updates = "check_for_updates";
 	public String show_changelog = "show_changelog";
-	public String action_name = "com.pyler.aquamail.updater.ENABLE_CHECK";
-
-	public boolean isAquaMailInstalled(Context ctx) {
-		PackageManager packageManager = ctx.getPackageManager();
+	public String release_type = "release_type";
+	public String ACTION_NAME = "com.pyler.aquamail.updater.ENABLE_CHECK";
+    public Context context;
+	public Helper(Context ctx) {
+		this.context = ctx;
+	}
+	public Context getContext() {
+		return this.context;
+	}
+	public boolean isAquaMailInstalled() {
+		PackageManager packageManager = getContext().getPackageManager();
 		boolean isInstalled = false;
 		try {
 			packageManager.getPackageInfo(AQUAMAIL_PKG,
@@ -32,10 +40,10 @@ public class Helper {
 		return isInstalled;
 	}
 
-	public String getAquaMailInstalledVersion(Context ctx) {
-		String versionName = ctx.getString(R.string.unknown);
+	public String getAquaMailInstalledVersion() {
+		String versionName = getContext().getString(R.string.unknown);
 		try {
-			PackageInfo pInfo = ctx.getPackageManager().getPackageInfo(
+			PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(
 					AQUAMAIL_PKG, 0);
 			versionName = pInfo.versionName;
 		} catch (PackageManager.NameNotFoundException e) {
@@ -44,11 +52,11 @@ public class Helper {
 		return versionName;
 	}
 
-	public String getAquaMailUpdaterInstalledVersion(Context ctx) {
+	public String getAquaMailUpdaterInstalledVersion() {
 		String versionName = null;
 		try {
-			PackageInfo pInfo = ctx.getPackageManager().getPackageInfo(
-					ctx.getPackageName(), 0);
+			PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(
+					getContext().getPackageName(), 0);
 			versionName = pInfo.versionName;
 		} catch (PackageManager.NameNotFoundException e) {
 			e.printStackTrace();
@@ -71,12 +79,19 @@ public class Helper {
 		Log.d(TAG, msg);
 	}
 
-	public void debugToast(Context ctx, String msg) {
-		Toast.makeText(ctx, TAG + ": " + msg, Toast.LENGTH_SHORT).show();
+	public void debugToast(String msg) {
+		Toast.makeText(getContext(), TAG + ": " + msg, Toast.LENGTH_SHORT).show();
 	}
 
-	public void enableCheck(Context ctx) {
-		Intent enableCheck = new Intent(action_name);
-		ctx.sendBroadcast(enableCheck);
+	public void enableCheck() {
+		Intent enableCheck = new Intent(ACTION_NAME);
+		getContext().sendBroadcast(enableCheck);
+	}
+	
+	public String getNewVersion(String text) {
+		int start = 16;
+		int end = text.length() - 43;
+		String newVersion = text.substring(start, end);
+		return newVersion;
 	}
 }

@@ -22,7 +22,9 @@
     <string name="version">Version</string>
 	<string name="cant_load_changelog">N\'arrive pas à télécharger les changements récents</string>
     <string name="show_changelog">Montrer les changements récents</string>
-    <string name="show_changelog_info">Montrer les changements si la nouvelle version est disponible</string>
-    <string name="check_for_updates_info">Rechercher les mises à jour après un certain temps</string>
-
+    <string name="release_type">Type de version</string>
+    <string name="stable">Version stable</string>
+    <string name="beta">Version bêta</string>
+    <string name="always">Toujours</string>
+    <string name="when_new_version">En cas de nouvelle version</string>
 </resources>

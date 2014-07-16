@@ -22,7 +22,10 @@
     <string name="version">Версия</string>
 	<string name="cant_load_changelog">Ошибка загрузки списка изменений</string>
     <string name="show_changelog">Показывать список измеений</string>
-    <string name="show_changelog_info">Показывать список измений при появлении новой версии</string>
-    <string name="check_for_updates_info">Периодически проверять наличие обновлений</string>
+	<string name="release_type">Канал обновлений</string>
+	<string name="stable">Стабильный</string>
+	<string name="beta">Бета</string>
+	<string name="always">Всегда</string>
+	<string name="when_new_version_available">Когда появляется новая версия</string>
     
 </resources>

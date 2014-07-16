@@ -27,7 +27,12 @@
     <!-- v1.2 -->
     <string name="cant_load_changelog">Can\'t load changelog.</string>
     <string name="show_changelog">Show changelog</string>
-    <string name="show_changelog_info">Show changelog if new version is available</string>
-    <string name="check_for_updates_info">Check for updates after certain time period</string>
+	
+	<!-- v1.3 -->
+	<string name="release_type">Release type</string>
+	<string name="stable">Stable version</string>
+	<string name="beta">Beta version</string>
+	<string name="always">Always</string>
+	<string name="when_new_version_available">When new version is available</string>
 
 </resources>

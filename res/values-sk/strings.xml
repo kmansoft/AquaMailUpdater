@@ -3,7 +3,7 @@
 
     <string name="about">O aplikácii</string>
     <string name="installed_version">Nainštalovaná verzia: %s</string>
-    <string name="new_version">Aktuálna verzia: %s</string>
+    <string name="new_version">Nová verzia: %s</string>
     <string name="download">Stiahnuť</string>
     <string name="aquamail_not_installed">Aplikácia AquaMail nie je nainštalovaná.</string>
     <string name="about_info">Autor: pyler\nVďaka: Kostya Vasilyev\n\nAquaMail Updater vyhľadá a stiahne najnovšiu verziu aplikácie AquaMail.\n\nTáto aplikácia používa knižnicu <i>ion</i> od vývojára Koushik Dutta.</string>
@@ -22,7 +22,10 @@
     <string name="version">Verzia</string>
     <string name="cant_load_changelog">Nie je možné načítať zoznam zmien.</string>
     <string name="show_changelog">Zobraziť zoznam zmien</string>
-    <string name="show_changelog_info">Zobraziť zoznam zmien, ak je dostupná nová verzia</string>
-    <string name="check_for_updates_info">Kontrolovať aktualizácie po istom časovom období</string>
+    <string name="release_type">Typ vydania</string>
+	<string name="stable">Stabilné verzie</string>
+	<string name="beta">Beta verzie</string>
+	<string name="always">Vždy</string>
+	<string name="when_new_version_available">Ak je dostupná nová verzia</string>
 
 </resources>

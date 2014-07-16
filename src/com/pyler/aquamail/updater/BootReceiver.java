@@ -11,24 +11,25 @@ import android.preference.PreferenceManager;
 public class BootReceiver extends BroadcastReceiver {
 	public SharedPreferences prefs;
 	public AlarmManager alarm;
-	Helper helper = new Helper();
-
+	public Helper helper;
+	
 	@Override
 	public void onReceive(Context context, Intent intent) {
+		helper = new Helper(context);
 		prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		int checkUpdates = Integer.valueOf(prefs.getString(
-				helper.checkForUpdates, "-1"));
+		int checkForUpdates = Integer.valueOf(prefs.getString(
+				helper.check_for_updates, "1"));
 		String action = intent.getAction();
-		if (Intent.ACTION_BOOT_COMPLETED.equals(action) && checkUpdates != -1) {
+		if (Intent.ACTION_BOOT_COMPLETED.equals(action) && checkForUpdates != -1) {
 			Intent serviceIntent = new Intent(context, UpdateReceiver.class);
-			serviceIntent.setAction(helper.action_name);
+			serviceIntent.setAction(helper.ACTION_NAME);
 			PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
 					1, serviceIntent, 0);
 			alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-					System.currentTimeMillis(), checkUpdates
+					System.currentTimeMillis(), checkForUpdates
 							* AlarmManager.INTERVAL_HOUR, pendingIntent);
-			helper.enableCheck(context);
+			helper.enableCheck();
 
 		}
 	}

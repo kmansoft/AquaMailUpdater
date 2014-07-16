@@ -29,7 +29,6 @@ import com.koushikdutta.ion.ProgressCallback;
 
 public class Updater extends Activity {
 	public String URL_VERSION = "http://aqua-mail.com/download/xversion-AquaMail-market.txt";
-	public String URL_CHANGELOG = "http://pyler.wen.ru/aquamail/changelog.txt";
 	public String URL_NEW_VERSION = "http://aqua-mail.com/download/AquaMail-market-%s.apk";
 	public String URL_NEW_FILE = "AquaMail-market-%s.apk";
 	public String AQUAMAIL_VERSION = "AquaMail %s";
@@ -44,7 +43,7 @@ public class Updater extends Activity {
 	public String changelog;
 	public AlarmManager alarm;
 	public boolean isNewVersion;
-	public Helper helper = new Helper();
+	public Helper helper = new Helper(this);
 	public int NOTIFICATION_ID = 1;
 	public NotificationManager notificationManager;
 	public Notification updateNotification;
@@ -76,7 +75,6 @@ public class Updater extends Activity {
 					.setText(getString(R.string.aquamail_not_installed));
 			return;
 		}
-
 		showAquaMailNewVersion();
 	}
 
@@ -89,9 +87,6 @@ public class Updater extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.changelog:
-			showChangelog();
-			return true;
 		case R.id.settings:
 			showSettings();
 			return true;
@@ -105,9 +100,9 @@ public class Updater extends Activity {
 
 	public void showAbout() {
 		String title = getString(R.string.app_name);
-		if (helper.getAquaMailUpdaterInstalledVersion(this) != null) {
+		if (helper.getAquaMailUpdaterInstalledVersion() != null) {
 			String version = String.format(" %s",
-					helper.getAquaMailUpdaterInstalledVersion(this));
+					helper.getAquaMailUpdaterInstalledVersion());
 			title += version;
 		}
 		AlertDialog.Builder aboutDialog = new AlertDialog.Builder(this);
@@ -130,28 +125,35 @@ public class Updater extends Activity {
 	}
 
 	public String getAquaMailInstalledVersion() {
-		return helper.getAquaMailInstalledVersion(this);
+		return helper.getAquaMailInstalledVersion();
 	}
 
 	public void showAquaMailNewVersion() {
+		if (getChangelog() == 0) {
+			showChangelog();
+		}
+		String URL = null;
+		if (releaseType() == 1) {
+			URL = helper.URL_VERSION_BETA;
+		} else {
+			URL = helper.URL_VERSION;
+		}
 		installedVersionName = getAquaMailInstalledVersion();
 		installedVersion.setText(getString(R.string.installed_version,
 				installedVersionName));
-		Ion.with(this).load(URL_VERSION).asString()
+		Ion.with(this).load(URL).asString()
 				.setCallback(new FutureCallback<String>() {
 					@Override
 					public void onCompleted(Exception e, String result) {
 						if (result != null) {
-							int start = 16;
-							int end = result.length() - 43;
-							newVersionName = result.substring(start, end);
+							newVersionName = helper.getNewVersion(result);
 							newVersion.setTextColor(Color.GREEN);
 							newVersion.setText(getString(R.string.new_version,
 									newVersionName));
 							if (!newVersionName.equals(installedVersionName)) {
 								downloadButton.setVisibility(View.VISIBLE);
 							}
-							if (changelogEnabled()) {
+							if (getChangelog() == 1) {
 								showChangelog();
 							}
 						} else {
@@ -168,7 +170,7 @@ public class Updater extends Activity {
 	}
 
 	public boolean isAquaMailInstalled() {
-		return helper.isAquaMailInstalled(this);
+		return helper.isAquaMailInstalled();
 	}
 
 	public void downloadUpdate() {
@@ -224,7 +226,7 @@ public class Updater extends Activity {
 					}
 				});
 		changelogDialog.create();
-		Ion.with(this).load(URL_CHANGELOG).asString()
+		Ion.with(this).load(helper.URL_CHANGELOG).asString()
 				.setCallback(new FutureCallback<String>() {
 					@Override
 					public void onCompleted(Exception e, String result) {
@@ -243,10 +245,17 @@ public class Updater extends Activity {
 				});
 	}
 
-	public boolean changelogEnabled() {
+	public int getChangelog() {
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		boolean changelogEnabled = prefs
-				.getBoolean(helper.show_changelog, true);
-		return changelogEnabled;
+		int showChangelog = Integer.valueOf(prefs.getString(
+				helper.show_changelog, "2"));
+		return showChangelog;
+	}
+
+	public int releaseType() {
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		int releaseType = Integer.valueOf(prefs.getString(helper.release_type,
+				"0"));
+		return releaseType;
 	}
 }

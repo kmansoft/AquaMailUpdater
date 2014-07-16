@@ -17,5 +17,27 @@
         <item>24</item>
 		<item>-1</item>
     </string-array>
+	
+	<string-array name="release_type">
+        <item>@string/stable</item>
+        <item>@string/beta</item>
+    </string-array>
+	
+	<string-array name="release_type_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+	
+	<string-array name="show_changelog">
+        <item>@string/always</item>
+        <item>@string/when_new_version_available</item>
+        <item>@string/never</item>
+    </string-array>
+	
+	<string-array name="show_changelog_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
     
 </resources>

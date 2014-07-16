@@ -6,6 +6,8 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 
 import com.koushikdutta.async.future.FutureCallback;
@@ -17,21 +19,31 @@ public class UpdateReceiver extends BroadcastReceiver {
 	public Notification updateNotification;
 	public String newVersionName;
 	public String installedVersionName;
-	public Helper helper = new Helper();
-	
+	public Helper helper;
+	public SharedPreferences prefs;
+	public int releaseType;
 	@Override
 	public void onReceive(final Context context, Intent intent) {
+		helper = new Helper(context);
 		String action = intent.getAction();
-		if (helper.action_name.equals(action)) {
-		    installedVersionName = helper.getAquaMailInstalledVersion(context);
-			Ion.with(context).load(helper.URL_VERSION).asString()
+		if (helper.ACTION_NAME.equals(action)) {
+		    prefs = PreferenceManager.getDefaultSharedPreferences(context);
+			releaseType = Integer.valueOf(prefs
+				.getString(helper.release_type, "0"));
+			String URL;
+			if (releaseType==1) {
+			   URL = helper.URL_VERSION_BETA;
+		    }
+			else {
+			   URL = helper.URL_VERSION;
+			}
+			installedVersionName = helper.getAquaMailInstalledVersion();
+			Ion.with(context).load(URL).asString()
 					.setCallback(new FutureCallback<String>() {
 						@Override
 						public void onCompleted(Exception e, String result) {
 							if (result != null) {
-								int start = 16;
-								int end = result.length() - 43;
-								newVersionName = result.substring(start, end);
+								newVersionName = helper.getNewVersion(result);
 								if (!newVersionName
 										.equals(installedVersionName)) {
 									Intent openIntent = new Intent(context,
