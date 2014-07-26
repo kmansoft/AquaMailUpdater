@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="about">О программе</string>
+    <string name="installed_version">Установленная версия: %s</string>
+    <string name="new_version">Новая версия: %s</string>
+    <string name="download">Загрузить</string>
+    <string name="aquamail_not_installed">AquaMail не установлена.</string>
+    <string name="about_info">Автор: pyler\nС благодарностью: Kostya Vasilyev\n\nAquaMail Updater проверяет наличие обновлений AquaMail.\n\nПриложение использует библиотеку <i>ion</i> от разработчика Koushik Dutta.</string>
+    <string name="unknown">Неизвестно</string>
+    <string name="download_info">Заргружено %1$s из %2$s</string>
+	<string name="settings">Настройки</string>
+    <string name="check_for_updates">Проверять обновления</string>
+    <string name="every_hour">Раз в час</string>
+    <string name="every_3_hours">Раз в 3 часа</string>
+    <string name="every_6_hours">Раз в 6 часа</string>
+    <string name="every_12_hours">Раз в 12 часов</string>
+    <string name="every_24_hours">Раз в сутки</string>
+    <string name="never">Никогда</string>
+    <string name="new_version_available">Доступна новая версия</string>
+    <string name="changelog">Список изменений</string>
+    <string name="version">Версия</string>
+	<string name="cant_load_changelog">Ошибка загрузки списка изменений</string>
+    <string name="show_changelog">Показывать список измеений</string>
+	<string name="release_type">Канал обновлений</string>
+	<string name="stable">Стабильный</string>
+	<string name="beta">Бета</string>
+	<string name="always">Всегда</string>
+	<string name="when_new_version_available">Когда появляется новая версия</string>
+    
+</resources>

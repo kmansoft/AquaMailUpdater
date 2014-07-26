@@ -12,7 +12,7 @@ public class BootReceiver extends BroadcastReceiver {
 	public SharedPreferences prefs;
 	public AlarmManager alarm;
 	public Helper helper;
-	
+
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		helper = new Helper(context);
@@ -21,8 +21,9 @@ public class BootReceiver extends BroadcastReceiver {
 		int checkForUpdates = Integer.valueOf(prefs.getString(
 				helper.check_for_updates, "1"));
 		String action = intent.getAction();
-		if (Intent.ACTION_BOOT_COMPLETED.equals(action) && checkForUpdates != -1) {
-			Intent serviceIntent = new Intent(context, UpdateReceiver.class);
+		if (Intent.ACTION_BOOT_COMPLETED.equals(action)
+				&& checkForUpdates != -1) {
+			Intent serviceIntent = new Intent(context, Checker.class);
 			serviceIntent.setAction(helper.ACTION_NAME);
 			PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
 					1, serviceIntent, 0);

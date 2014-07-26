@@ -11,8 +11,6 @@ import android.preference.PreferenceManager;
 
 public class UpdaterPreferences extends PreferenceActivity implements
 		SharedPreferences.OnSharedPreferenceChangeListener {
-	Helper helper = new Helper(this);
-
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,21 +22,22 @@ public class UpdaterPreferences extends PreferenceActivity implements
 	}
 
 	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-		if (helper.check_for_updates.equals(key)) {
-			int checkForUpdates = Integer.valueOf(prefs.getString(
-					helper.check_for_updates, "1"));
+		Helper helper = new Helper();
+		if (helper.checkForUpdates.equals(key)) {
+			int checkUpdates = Integer.valueOf(prefs.getString(
+					helper.checkForUpdates, "-1"));
 			AlarmManager alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-			if (checkForUpdates != -1) {
-				Intent serviceIntent = new Intent(this, UpdateReceiver.class);
-				serviceIntent.setAction(helper.ACTION_NAME);
-				PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
-						1, serviceIntent, 0);
+			if (checkUpdates != -1) {
+				Intent serviceIntent = new Intent(this,
+						UpdateReceiver.class);
+				serviceIntent.setAction(helper.action_name);
+				PendingIntent pendingIntent = PendingIntent.getBroadcast(
+						this, 1, serviceIntent, 0);
 				alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-						System.currentTimeMillis(), checkForUpdates
+						System.currentTimeMillis(), checkUpdates
 								* AlarmManager.INTERVAL_HOUR, pendingIntent);
-				helper.enableCheck();
+				helper.enableCheck(this);
 			}
 		}
-		
 	}
 }

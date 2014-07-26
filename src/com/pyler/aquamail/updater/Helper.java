@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 public class Helper {
 	public String AQUAMAIL_PKG = "org.kman.AquaMail";
-	public String URL_CHANGELOG = "http://aquamailupdater.wen.ru/changelog.txt";
 	public String URL_VERSION = "http://aqua-mail.com/download/xversion-AquaMail-market.txt";
 	public String URL_VERSION_BETA = "http://aqua-mail.com/download/xversion-AquaMail-market-beta.txt";
 	public String AQUAMAIL_VERSION = "AquaMail %s";
@@ -19,15 +18,18 @@ public class Helper {
 	public String newVersionName;
 	public String check_for_updates = "check_for_updates";
 	public String show_changelog = "show_changelog";
-	public String release_type = "release_type";
-	public String ACTION_NAME = "com.pyler.aquamail.updater.ENABLE_CHECK";
-    public Context context;
+	public String version_type = "version_type";
+	public String ACTION_NAME = "com.pyler.aquamail.updater.CHECK";
+	public Context context;
+
 	public Helper(Context ctx) {
-		this.context = ctx;
+		context = ctx;
 	}
+
 	public Context getContext() {
-		return this.context;
+		return context;
 	}
+
 	public boolean isAquaMailInstalled() {
 		PackageManager packageManager = getContext().getPackageManager();
 		boolean isInstalled = false;
@@ -43,8 +45,8 @@ public class Helper {
 	public String getAquaMailInstalledVersion() {
 		String versionName = getContext().getString(R.string.unknown);
 		try {
-			PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(
-					AQUAMAIL_PKG, 0);
+			PackageInfo pInfo = getContext().getPackageManager()
+					.getPackageInfo(AQUAMAIL_PKG, 0);
 			versionName = pInfo.versionName;
 		} catch (PackageManager.NameNotFoundException e) {
 			e.printStackTrace();
@@ -55,8 +57,8 @@ public class Helper {
 	public String getAquaMailUpdaterInstalledVersion() {
 		String versionName = null;
 		try {
-			PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(
-					getContext().getPackageName(), 0);
+			PackageInfo pInfo = getContext().getPackageManager()
+					.getPackageInfo(getContext().getPackageName(), 0);
 			versionName = pInfo.versionName;
 		} catch (PackageManager.NameNotFoundException e) {
 			e.printStackTrace();
@@ -80,18 +82,19 @@ public class Helper {
 	}
 
 	public void debugToast(String msg) {
-		Toast.makeText(getContext(), TAG + ": " + msg, Toast.LENGTH_SHORT).show();
+		Toast.makeText(getContext(), TAG + ": " + msg, Toast.LENGTH_SHORT)
+				.show();
 	}
 
 	public void enableCheck() {
 		Intent enableCheck = new Intent(ACTION_NAME);
 		getContext().sendBroadcast(enableCheck);
 	}
-	
-	public String getNewVersion(String text) {
+
+	public String getLatestVersion(String text) {
 		int start = 16;
 		int end = text.length() - 43;
-		String newVersion = text.substring(start, end);
-		return newVersion;
+		String latestVersion = text.substring(start, end);
+		return latestVersion;
 	}
 }

@@ -3,7 +3,7 @@
 
     <string name="about">О программе</string>
     <string name="installed_version">Установленная версия: %s</string>
-    <string name="new_version">Новая версия: %s</string>
+    <string name="latest_version">Новая версия: %s</string>
     <string name="download">Загрузить</string>
     <string name="aquamail_not_installed">AquaMail не установлена.</string>
     <string name="about_info">Автор: pyler\nС благодарностью: Kostya Vasilyev\n\nAquaMail Updater проверяет наличие обновлений AquaMail.\n\nПриложение использует библиотеку <i>ion</i> от разработчика Koushik Dutta.</string>
@@ -22,10 +22,11 @@
     <string name="version">Версия</string>
 	<string name="cant_load_changelog">Ошибка загрузки списка изменений</string>
     <string name="show_changelog">Показывать список измеений</string>
-	<string name="release_type">Канал обновлений</string>
+	<string name="version_type">Канал обновлений</string>
 	<string name="stable">Стабильный</string>
 	<string name="beta">Бета</string>
 	<string name="always">Всегда</string>
 	<string name="when_new_version_available">Когда появляется новая версия</string>
+	<string name="refresh">Обновить</string>
     
 </resources>

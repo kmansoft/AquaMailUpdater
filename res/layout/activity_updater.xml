@@ -17,7 +17,7 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/newVersion"
+        android:id="@+id/latestVersion"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignLeft="@+id/installedVersion"
@@ -28,8 +28,8 @@
         android:id="@+id/downloadButton"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_alignLeft="@+id/newVersion"
-        android:layout_below="@+id/newVersion"
+        android:layout_alignLeft="@+id/latestVersion"
+        android:layout_below="@+id/latestVersion"
         android:text="@string/download"
         android:visibility="gone" />
 

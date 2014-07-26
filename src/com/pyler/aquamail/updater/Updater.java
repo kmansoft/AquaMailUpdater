@@ -5,15 +5,12 @@ import java.io.File;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,25 +25,23 @@ import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.ProgressCallback;
 
 public class Updater extends Activity {
+	public String URL_CHANGELOG = "http://aquamailupdater.wen.ru/changelog.txt";
+	public String URL_CHANGELOG_BETA = "http://aquamailupdater.wen.ru/changelog-beta.txt";
 	public String URL_VERSION = "http://aqua-mail.com/download/xversion-AquaMail-market.txt";
 	public String URL_NEW_VERSION = "http://aqua-mail.com/download/AquaMail-market-%s.apk";
-	public String URL_NEW_FILE = "AquaMail-market-%s.apk";
+	public String AQUAMAIL_APK_FILE = "AquaMail-market-%s.apk";
 	public String AQUAMAIL_VERSION = "AquaMail %s";
 	public String AQUAMAIL_PKG = "org.kman.AquaMail";
 	public Button downloadButton;
 	public TextView installedVersion;
-	public TextView newVersion;
+	public TextView latestVersion;
 	public TextView downloadInfo;
 	public ProgressBar progressBar;
 	public String installedVersionName;
-	public String newVersionName;
+	public String latestVersionName;
 	public String changelog;
 	public AlarmManager alarm;
-	public boolean isNewVersion;
 	public Helper helper = new Helper(this);
-	public int NOTIFICATION_ID = 1;
-	public NotificationManager notificationManager;
-	public Notification updateNotification;
 	public Future<File> downloading;
 	public AlertDialog.Builder changelogDialog;
 	public SharedPreferences prefs;
@@ -56,7 +51,7 @@ public class Updater extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_updater);
 		installedVersion = (TextView) findViewById(R.id.installedVersion);
-		newVersion = (TextView) findViewById(R.id.newVersion);
+		latestVersion = (TextView) findViewById(R.id.latestVersion);
 		downloadInfo = (TextView) findViewById(R.id.downloadInfo);
 		progressBar = (ProgressBar) findViewById(R.id.downloadProgress);
 		downloadButton = (Button) findViewById(R.id.downloadButton);
@@ -70,12 +65,13 @@ public class Updater extends Activity {
 				downloadUpdate();
 			}
 		});
-		if (!isAquaMailInstalled()) {
+		if (!helper.isAquaMailInstalled()) {
 			installedVersion
 					.setText(getString(R.string.aquamail_not_installed));
 			return;
 		}
-		showAquaMailNewVersion();
+		deleteOldAquaMailInstallationApk();
+		showAquaMaillatestVersion();
 	}
 
 	@Override
@@ -87,6 +83,9 @@ public class Updater extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case R.id.refresh:
+			refreshApp();
+			return true;
 		case R.id.settings:
 			showSettings();
 			return true;
@@ -96,6 +95,10 @@ public class Updater extends Activity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	public void refreshApp() {
+		this.recreate();
 	}
 
 	public void showAbout() {
@@ -112,7 +115,7 @@ public class Updater extends Activity {
 		aboutDialog.setPositiveButton(android.R.string.ok,
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface aboutDialog, int id) {
-						aboutDialog.cancel();
+						aboutDialog.dismiss();
 					}
 				});
 		aboutDialog.create();
@@ -120,7 +123,7 @@ public class Updater extends Activity {
 	}
 
 	public void showSettings() {
-		Intent settings = new Intent(this, UpdaterPreferences.class);
+		Intent settings = new Intent(this, Settings.class);
 		startActivity(settings);
 	}
 
@@ -128,40 +131,41 @@ public class Updater extends Activity {
 		return helper.getAquaMailInstalledVersion();
 	}
 
-	public void showAquaMailNewVersion() {
+	public void showAquaMaillatestVersion() {
 		if (getChangelog() == 0) {
 			showChangelog();
 		}
-		String URL = null;
-		if (releaseType() == 1) {
-			URL = helper.URL_VERSION_BETA;
+		String urlVersion = null;
+		if (getVersionType() == 1) {
+			urlVersion = helper.URL_VERSION_BETA;
 		} else {
-			URL = helper.URL_VERSION;
+			urlVersion = helper.URL_VERSION;
 		}
 		installedVersionName = getAquaMailInstalledVersion();
 		installedVersion.setText(getString(R.string.installed_version,
 				installedVersionName));
-		Ion.with(this).load(URL).asString()
+		Ion.with(this).load(urlVersion).asString()
 				.setCallback(new FutureCallback<String>() {
 					@Override
 					public void onCompleted(Exception e, String result) {
 						if (result != null) {
-							newVersionName = helper.getNewVersion(result);
-							newVersion.setTextColor(Color.GREEN);
-							newVersion.setText(getString(R.string.new_version,
-									newVersionName));
-							if (!newVersionName.equals(installedVersionName)) {
+							latestVersionName = helper.getLatestVersion(result);
+							latestVersion.setTextColor(Color.GREEN);
+							latestVersion
+									.setText(getString(R.string.latest_version,
+											latestVersionName));
+							if (!latestVersionName.equals(installedVersionName)) {
 								downloadButton.setVisibility(View.VISIBLE);
-							}
-							if (getChangelog() == 1) {
-								showChangelog();
+								if (getChangelog() == 1) {
+									showChangelog();
+								}
 							}
 						} else {
-							newVersion.setTextColor(Color.RED);
+							latestVersion.setTextColor(Color.RED);
 							String unknownVersion = String.format(
-									getString(R.string.new_version),
+									getString(R.string.latest_version),
 									getString(R.string.unknown));
-							newVersion.setText(unknownVersion);
+							latestVersion.setText(unknownVersion);
 						}
 
 					}
@@ -169,15 +173,11 @@ public class Updater extends Activity {
 
 	}
 
-	public boolean isAquaMailInstalled() {
-		return helper.isAquaMailInstalled();
-	}
-
 	public void downloadUpdate() {
-		final String updateUrl = String.format(URL_NEW_VERSION, newVersionName);
-		final File updateFile = new File(
-				Environment.getExternalStorageDirectory() + "/"
-						+ String.format(URL_NEW_FILE, newVersionName));
+		final String updateUrl = String.format(URL_NEW_VERSION,
+				latestVersionName);
+		final File updateFile = new File(getExternalFilesDir(null) + File.separator
+				+ String.format(AQUAMAIL_APK_FILE, latestVersionName));
 		progressBar.setVisibility(View.VISIBLE);
 		downloading = Ion.with(this).load(updateUrl).progressBar(progressBar)
 				.progressHandler(new ProgressCallback() {
@@ -222,11 +222,17 @@ public class Updater extends Activity {
 		changelogDialog.setPositiveButton(android.R.string.ok,
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface changelogDialog, int id) {
-						changelogDialog.cancel();
+						changelogDialog.dismiss();
 					}
 				});
 		changelogDialog.create();
-		Ion.with(this).load(helper.URL_CHANGELOG).asString()
+		String urlChangelog = null;
+		if (getVersionType() == 1) {
+			urlChangelog = URL_CHANGELOG_BETA;
+		} else {
+			urlChangelog = URL_CHANGELOG;
+		}
+		Ion.with(this).load(urlChangelog).asString()
 				.setCallback(new FutureCallback<String>() {
 					@Override
 					public void onCompleted(Exception e, String result) {
@@ -234,13 +240,11 @@ public class Updater extends Activity {
 							String version = "Version";
 							changelog = result.replaceAll(version,
 									getString(R.string.version));
-							changelogDialog.setMessage(changelog);
-							changelogDialog.show();
 						} else {
 							changelog = getString(R.string.cant_load_changelog);
-							changelogDialog.setMessage(changelog);
-							changelogDialog.show();
 						}
+						changelogDialog.setMessage(changelog);
+						changelogDialog.show();
 					}
 				});
 	}
@@ -252,10 +256,20 @@ public class Updater extends Activity {
 		return showChangelog;
 	}
 
-	public int releaseType() {
+	public int getVersionType() {
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		int releaseType = Integer.valueOf(prefs.getString(helper.release_type,
+		int versionType = Integer.valueOf(prefs.getString(helper.version_type,
 				"0"));
-		return releaseType;
+		return versionType;
+	}
+
+	public void deleteOldAquaMailInstallationApk() {
+		File oldApkFile = new File(getExternalFilesDir(null)
+				+ File.separator
+				+ String.format(AQUAMAIL_APK_FILE,
+						helper.getAquaMailInstalledVersion()));
+		if (oldApkFile.exists()) {
+			oldApkFile.delete();
+		}
 	}
 }

@@ -11,10 +11,10 @@ public final class R {
     public static final class array {
         public static final int check_for_updates=0x7f050000;
         public static final int check_for_updates_values=0x7f050001;
-        public static final int release_type=0x7f050002;
-        public static final int release_type_values=0x7f050003;
         public static final int show_changelog=0x7f050004;
         public static final int show_changelog_values=0x7f050005;
+        public static final int version_type=0x7f050002;
+        public static final int version_type_values=0x7f050003;
     }
     public static final class attr {
     }
@@ -30,15 +30,17 @@ public final class R {
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
+        public static final int ic_menu_refresh=0x7f020001;
     }
     public static final class id {
-        public static final int about=0x7f0a0006;
+        public static final int about=0x7f0a0007;
         public static final int downloadButton=0x7f0a0002;
         public static final int downloadInfo=0x7f0a0004;
         public static final int downloadProgress=0x7f0a0003;
         public static final int installedVersion=0x7f0a0000;
-        public static final int newVersion=0x7f0a0001;
-        public static final int settings=0x7f0a0005;
+        public static final int latestVersion=0x7f0a0001;
+        public static final int refresh=0x7f0a0005;
+        public static final int settings=0x7f0a0006;
     }
     public static final class layout {
         public static final int activity_updater=0x7f030000;
@@ -66,12 +68,12 @@ public final class R {
         public static final int every_6_hours=0x7f07000d;
         public static final int every_hour=0x7f07000b;
         public static final int installed_version=0x7f070002;
+        public static final int latest_version=0x7f070003;
         public static final int never=0x7f070010;
-        public static final int new_version=0x7f070003;
         public static final int new_version_available=0x7f070011;
-        /**  v1.3 
+        /**  v1.4 
          */
-        public static final int release_type=0x7f070016;
+        public static final int refresh=0x7f07001b;
         /**  v1.1 
          */
         public static final int settings=0x7f070009;
@@ -79,7 +81,9 @@ public final class R {
         public static final int stable=0x7f070017;
         public static final int unknown=0x7f070007;
         public static final int version=0x7f070013;
-        public static final int when_new_version=0x7f07001b;
+        /**  v1.3 
+         */
+        public static final int version_type=0x7f070016;
         public static final int when_new_version_available=0x7f07001a;
     }
     public static final class style {

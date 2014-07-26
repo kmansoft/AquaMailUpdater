@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/settings" >
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/check_for_updates"
+            android:entryValues="@array/check_for_updates_values"
+            android:key="check_for_updates"
+            android:title="@string/check_for_updates" />
+			
+		<ListPreference
+            android:defaultValue="0"
+            android:entries="@array/release_type"
+            android:entryValues="@array/release_type_values"
+            android:key="release_type"
+            android:title="@string/release_type" />
+
+        <ListPreference
+            android:defaultValue="2"
+            android:entries="@array/show_changelog"
+            android:entryValues="@array/show_changelog_values"
+            android:key="show_changelog"
+            android:title="@string/show_changelog" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
