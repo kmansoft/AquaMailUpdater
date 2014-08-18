@@ -25,9 +25,9 @@ import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.ProgressCallback;
 
 public class Updater extends Activity {
-	public String URL_CHANGELOG = "http://aquamailupdater.wen.ru/changelog.txt";
-	public String URL_CHANGELOG_BETA = "http://aquamailupdater.wen.ru/changelog-beta.txt";
+	public String URL_CHANGELOG = "http://aqua-mail.com/download/AquaMail-market-%s.apk-changes.txt";
 	public String URL_VERSION = "http://aqua-mail.com/download/xversion-AquaMail-market.txt";
+	public String URL_VERSION_BETA = "http://aqua-mail.com/download/xversion-AquaMail-market-beta.txt";
 	public String URL_NEW_VERSION = "http://aqua-mail.com/download/AquaMail-market-%s.apk";
 	public String AQUAMAIL_APK_FILE = "AquaMail-market-%s.apk";
 	public String AQUAMAIL_VERSION = "AquaMail %s";
@@ -71,7 +71,7 @@ public class Updater extends Activity {
 			return;
 		}
 		deleteOldAquaMailInstallationApk();
-		showAquaMaillatestVersion();
+		showAquaMailLatestVersion();
 	}
 
 	@Override
@@ -127,21 +127,14 @@ public class Updater extends Activity {
 		startActivity(settings);
 	}
 
-	public String getAquaMailInstalledVersion() {
-		return helper.getAquaMailInstalledVersion();
-	}
-
-	public void showAquaMaillatestVersion() {
-		if (getChangelog() == 0) {
-			showChangelog();
-		}
+	public void showAquaMailLatestVersion() {
 		String urlVersion = null;
 		if (getVersionType() == 1) {
 			urlVersion = helper.URL_VERSION_BETA;
 		} else {
 			urlVersion = helper.URL_VERSION;
 		}
-		installedVersionName = getAquaMailInstalledVersion();
+		installedVersionName = helper.getAquaMailInstalledVersion();
 		installedVersion.setText(getString(R.string.installed_version,
 				installedVersionName));
 		Ion.with(this).load(urlVersion).asString()
@@ -156,7 +149,7 @@ public class Updater extends Activity {
 											latestVersionName));
 							if (!latestVersionName.equals(installedVersionName)) {
 								downloadButton.setVisibility(View.VISIBLE);
-								if (getChangelog() == 1) {
+								if (getChangelog() == 0) {
 									showChangelog();
 								}
 							}
@@ -176,7 +169,8 @@ public class Updater extends Activity {
 	public void downloadUpdate() {
 		final String updateUrl = String.format(URL_NEW_VERSION,
 				latestVersionName);
-		final File updateFile = new File(getExternalFilesDir(null) + File.separator
+		final File updateFile = new File(getExternalFilesDir(null)
+				+ File.separator
 				+ String.format(AQUAMAIL_APK_FILE, latestVersionName));
 		progressBar.setVisibility(View.VISIBLE);
 		downloading = Ion.with(this).load(updateUrl).progressBar(progressBar)
@@ -226,20 +220,16 @@ public class Updater extends Activity {
 					}
 				});
 		changelogDialog.create();
-		String urlChangelog = null;
-		if (getVersionType() == 1) {
-			urlChangelog = URL_CHANGELOG_BETA;
-		} else {
-			urlChangelog = URL_CHANGELOG;
-		}
+		String urlChangelog = String.format(URL_CHANGELOG, latestVersionName);
 		Ion.with(this).load(urlChangelog).asString()
 				.setCallback(new FutureCallback<String>() {
 					@Override
 					public void onCompleted(Exception e, String result) {
 						if (result != null) {
-							String version = "Version";
-							changelog = result.replaceAll(version,
-									getString(R.string.version));
+							changelog = getString(R.string.version) + " "
+									+ latestVersionName + "\n\n";
+							changelog += helper.getChanges(result) + "\n";
+							changelog += helper.getChangelog(result);
 						} else {
 							changelog = getString(R.string.cant_load_changelog);
 						}
@@ -252,7 +242,7 @@ public class Updater extends Activity {
 	public int getChangelog() {
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		int showChangelog = Integer.valueOf(prefs.getString(
-				helper.show_changelog, "2"));
+				helper.show_changelog, "0"));
 		return showChangelog;
 	}
 

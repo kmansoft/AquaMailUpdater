@@ -16,7 +16,7 @@
         android:summary="%s"
         android:title="@string/version_type" />
     <ListPreference
-        android:defaultValue="1"
+        android:defaultValue="0"
         android:entries="@array/show_changelog"
         android:entryValues="@array/show_changelog_values"
         android:key="show_changelog"
