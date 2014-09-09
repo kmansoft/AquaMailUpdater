@@ -123,8 +123,10 @@ public class Helper {
 			if (line.contains(AQUAMAIL_CHANGELOG_TAG)) {
 				int posStart = line.indexOf(AQUAMAIL_CHANGELOG_TAG) + 4;
 				int posEnd = line.length();
-				line = line.replaceAll("-", "+");
 				line = line.substring(posStart, posEnd);
+				if (line.startsWith("-")) {
+				    line = "+" + line.substring(1, posEnd);
+				}
 				changes += line + "\n";
 			}
 		}

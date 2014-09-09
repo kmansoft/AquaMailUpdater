@@ -5,6 +5,7 @@ import java.io.File;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.koushikdutta.async.future.Future;
 import com.koushikdutta.async.future.FutureCallback;
@@ -40,10 +42,13 @@ public class Updater extends Activity {
 	public String installedVersionName;
 	public String latestVersionName;
 	public String changelog;
+	public String apkFile;
 	public AlarmManager alarm;
 	public Helper helper = new Helper(this);
 	public Future<File> downloading;
 	public AlertDialog.Builder changelogDialog;
+	public ProgressDialog checkingUpdates;
+	public ProgressDialog loadingChangelog;
 	public SharedPreferences prefs;
 
 	@Override
@@ -137,10 +142,14 @@ public class Updater extends Activity {
 		installedVersionName = helper.getAquaMailInstalledVersion();
 		installedVersion.setText(getString(R.string.installed_version,
 				installedVersionName));
+		checkingUpdates = new ProgressDialog(this);
+		checkingUpdates.setMessage(getString(R.string.checking_for_updates));
+		checkingUpdates.show();
 		Ion.with(this).load(urlVersion).asString()
 				.setCallback(new FutureCallback<String>() {
 					@Override
 					public void onCompleted(Exception e, String result) {
+						checkingUpdates.dismiss();
 						if (result != null) {
 							latestVersionName = helper.getLatestVersion(result);
 							latestVersion.setTextColor(Color.GREEN);
@@ -172,6 +181,7 @@ public class Updater extends Activity {
 		final File updateFile = new File(getExternalFilesDir(null)
 				+ File.separator
 				+ String.format(AQUAMAIL_APK_FILE, latestVersionName));
+		apkFile = updateFile.toString();
 		progressBar.setVisibility(View.VISIBLE);
 		downloading = Ion.with(this).load(updateUrl).progressBar(progressBar)
 				.progressHandler(new ProgressCallback() {
@@ -189,6 +199,7 @@ public class Updater extends Activity {
 					public void onCompleted(Exception e, File result) {
 						resetDownload();
 						if (result != null) {
+							showFileToast();
 							Intent intent = new Intent();
 							intent.setAction(Intent.ACTION_VIEW);
 							intent.setDataAndType(Uri.fromFile(updateFile),
@@ -220,11 +231,15 @@ public class Updater extends Activity {
 					}
 				});
 		changelogDialog.create();
+		loadingChangelog = new ProgressDialog(this);
+		loadingChangelog.setMessage(getString(R.string.loading_changelog));
+		loadingChangelog.show();
 		String urlChangelog = String.format(URL_CHANGELOG, latestVersionName);
 		Ion.with(this).load(urlChangelog).asString()
 				.setCallback(new FutureCallback<String>() {
 					@Override
 					public void onCompleted(Exception e, String result) {
+						loadingChangelog.dismiss();
 						if (result != null) {
 							changelog = getString(R.string.version) + " "
 									+ latestVersionName + "\n\n";
@@ -261,5 +276,9 @@ public class Updater extends Activity {
 		if (oldApkFile.exists()) {
 			oldApkFile.delete();
 		}
+	}
+
+	public void showFileToast() {
+		Toast.makeText(this, apkFile, Toast.LENGTH_LONG).show();
 	}
 }

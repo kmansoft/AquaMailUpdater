@@ -23,10 +23,12 @@
     <string name="cant_load_changelog">Nie je možné načítať zoznam zmien.</string>
     <string name="show_changelog">Zobraziť zoznam zmien</string>
     <string name="version_type">Typ verzií</string>
-	<string name="stable">Stabilné verzie</string>
-	<string name="beta">Beta verzie</string>
-	<string name="always">Vždy</string>
-	<string name="when_new_version_available">Ak je dostupná nová verzia</string>
-	<string name="refresh">Obnoviť</string>
+    <string name="stable">Stabilné verzie</string>
+    <string name="beta">Beta verzie</string>
+    <string name="always">Vždy</string>
+    <string name="when_new_version_available">Ak je dostupná nová verzia</string>
+    <string name="refresh">Obnoviť</string>
+    <string name="checking_for_updates">Kontrolovanie aktualizácií&#8230;</string>
+    <string name="loading_changelog">Načítavanie zoznamu zmien&#8230;</string>
 
 </resources>

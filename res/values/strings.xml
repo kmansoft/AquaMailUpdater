@@ -38,4 +38,8 @@
     <!-- v1.4 -->
     <string name="refresh">Refresh</string>
 
+    <!-- v1.7 -->
+    <string name="checking_for_updates">Checking for updates&#8230;</string>
+    <string name="loading_changelog">Loading changelog&#8230;</string>
+
 </resources>

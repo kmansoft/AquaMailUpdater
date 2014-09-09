@@ -60,6 +60,9 @@ public final class R {
         public static final int cant_load_changelog=0x7f070014;
         public static final int changelog=0x7f070012;
         public static final int check_for_updates=0x7f07000a;
+        /**  v1.7 
+         */
+        public static final int checking_for_updates=0x7f07001c;
         public static final int download=0x7f070004;
         public static final int download_info=0x7f070008;
         public static final int every_12_hours=0x7f07000e;
@@ -69,6 +72,7 @@ public final class R {
         public static final int every_hour=0x7f07000b;
         public static final int installed_version=0x7f070002;
         public static final int latest_version=0x7f070003;
+        public static final int loading_changelog=0x7f07001d;
         public static final int never=0x7f070010;
         public static final int new_version_available=0x7f070011;
         /**  v1.4 

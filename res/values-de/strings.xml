@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="about">Infos</string>
+    <string name="installed_version">Installierte Version: %s</string>
+    <string name="latest_version">Neueste Version: %s</string>
+    <string name="download">Download</string>
+    <string name="aquamail_not_installed">AquaMail ist nicht installiert.</string>
+    <string name="about_info">Author: pyler\nDank an: Kostya Vasilyev\n\nAquaMail Updater sucht und lädt die neueste AquaMail Version herunter.\n\nDiese App benutzt die <i>ion</i> library des Entwicklers Koushik Dutta.</string>
+    <string name="unknown">Unbekannt</string>
+    <string name="download_info">Heruntergeladen %1$s von %2$s</string>
+    <string name="settings">Einstellungen</string>
+    <string name="check_for_updates">Auf Updates prüfen</string>
+    <string name="every_hour">Jede Stunde</string>
+    <string name="every_3_hours">Alle 3 Stunden</string>
+    <string name="every_6_hours">Alle 6 Stunden</string>
+    <string name="every_12_hours">Alle 12 Stunden</string>
+    <string name="every_24_hours">Täglich</string>
+    <string name="never">Nie</string>
+    <string name="new_version_available">Neu Version vorhanden</string>
+    <string name="changelog">Änderungsliste</string>
+    <string name="version">Version</string>
+    <string name="cant_load_changelog">Kann die Änderungsliste nicht laden.</string>
+    <string name="show_changelog">Änderungsliste zeigen</string>
+    <string name="version_type">Versions Typ</string>
+    <string name="stable">Stabile Version</string>
+    <string name="beta">Beta Version</string>
+    <string name="always">Immer</string>
+    <string name="when_new_version_available">Wenn eine neue Version verfügbar ist</string>
+    <string name="refresh">Aktualisieren</string>
+
+</resources>
