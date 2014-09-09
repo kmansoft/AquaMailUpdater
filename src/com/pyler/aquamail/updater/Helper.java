@@ -125,7 +125,7 @@ public class Helper {
 				int posEnd = line.length();
 				line = line.substring(posStart, posEnd);
 				if (line.startsWith("-")) {
-				    line = "+" + line.substring(1, posEnd);
+					line = "+" + line.substring(1, line.length());
 				}
 				changes += line + "\n";
 			}
