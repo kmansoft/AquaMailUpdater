@@ -28,5 +28,7 @@
     <string name="always">Sempre</string>
     <string name="when_new_version_available">Quando è disponibile una nuova versione</string>
     <string name="refresh">Aggiorna</string>
+    <string name="checking_for_updates">Controllo aggiornamenti&#8230;</string>
+    <string name="loading_changelog">Sto scaricando info aggiornamenti&#8230;</string>
 
 </resources>

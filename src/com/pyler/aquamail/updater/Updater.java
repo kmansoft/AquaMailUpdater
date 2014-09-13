@@ -61,6 +61,7 @@ public class Updater extends Activity {
 		progressBar = (ProgressBar) findViewById(R.id.downloadProgress);
 		downloadButton = (Button) findViewById(R.id.downloadButton);
 		downloadButton.setOnClickListener(new View.OnClickListener() {
+			@Override
 			public void onClick(View v) {
 				if (downloading != null && !downloading.isCancelled()) {
 					resetDownload();
@@ -119,6 +120,7 @@ public class Updater extends Activity {
 		aboutDialog.setCancelable(true);
 		aboutDialog.setPositiveButton(android.R.string.ok,
 				new DialogInterface.OnClickListener() {
+					@Override
 					public void onClick(DialogInterface aboutDialog, int id) {
 						aboutDialog.dismiss();
 					}
@@ -226,6 +228,7 @@ public class Updater extends Activity {
 		changelogDialog.setCancelable(true);
 		changelogDialog.setPositiveButton(android.R.string.ok,
 				new DialogInterface.OnClickListener() {
+					@Override
 					public void onClick(DialogInterface changelogDialog, int id) {
 						changelogDialog.dismiss();
 					}

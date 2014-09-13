@@ -17,7 +17,7 @@
     <string name="every_12_hours">Alle 12 Stunden</string>
     <string name="every_24_hours">Täglich</string>
     <string name="never">Nie</string>
-    <string name="new_version_available">Neu Version vorhanden</string>
+    <string name="new_version_available">Neue Version vorhanden</string>
     <string name="changelog">Änderungsliste</string>
     <string name="version">Version</string>
     <string name="cant_load_changelog">Kann die Änderungsliste nicht laden.</string>
@@ -28,5 +28,7 @@
     <string name="always">Immer</string>
     <string name="when_new_version_available">Wenn eine neue Version verfügbar ist</string>
     <string name="refresh">Aktualisieren</string>
+    <string name="checking_for_updates">Prüfe auf Updates&#8230;</string>
+    <string name="loading_changelog">Lade Änderungsliste&#8230;</string>
 
 </resources>

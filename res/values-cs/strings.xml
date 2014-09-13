@@ -22,11 +22,13 @@
     <string name="version">Verze</string>
     <string name="cant_load_changelog">Nelze načíst seznam změn.</string>
     <string name="show_changelog">Zobrazit seznam změn</string>
-	<string name="version_type">Typ verzí</string>
-	<string name="stable">Stabilní verze</string>
-	<string name="beta">Beta verze</string>
-	<string name="always">Vždy</string>
-	<string name="when_new_version_available">Pokud je dostupná nová verze</string>
-	<string name="refresh">Obnovit</string>
+    <string name="version_type">Typ verzí</string>
+    <string name="stable">Stabilní verze</string>
+    <string name="beta">Beta verze</string>
+    <string name="always">Vždy</string>
+    <string name="when_new_version_available">Pokud je dostupná nová verze</string>
+    <string name="refresh">Obnovit</string>
+    <string name="checking_for_updates">Kontrolování aktualizací&#8230;</string>
+    <string name="loading_changelog">Načítání seznamu změn&#8230;</string>
 
 </resources>

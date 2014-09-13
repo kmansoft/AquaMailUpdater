@@ -20,7 +20,7 @@
     <string name="new_version_available">Nouvelle version disponible</string>
     <string name="changelog">Changements récents</string>
     <string name="version">Version</string>
-	<string name="cant_load_changelog">N\'arrive pas à télécharger les changements récents</string>
+    <string name="cant_load_changelog">N\'arrive pas à télécharger les changements récents</string>
     <string name="show_changelog">Montrer les changements récents</string>
     <string name="version_type">Type de version</string>
     <string name="stable">Version stable</string>
@@ -28,5 +28,7 @@
     <string name="always">Toujours</string>
     <string name="when_new_version_available">En cas de nouvelle version</string>
     <string name="refresh">Actualiser</string>
+    <string name="checking_for_updates">Recherche des mises à jour&#8230;</string>
+    <string name="loading_changelog">Chargement des changements récents&#8230;</string>
 
 </resources>

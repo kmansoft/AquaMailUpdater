@@ -9,7 +9,7 @@
     <string name="about_info">Автор: pyler\nС благодарностью: Kostya Vasilyev\n\nAquaMail Updater проверяет наличие обновлений AquaMail.\n\nПриложение использует библиотеку <i>ion</i> от разработчика Koushik Dutta.</string>
     <string name="unknown">Неизвестно</string>
     <string name="download_info">Заргружено %1$s из %2$s</string>
-	<string name="settings">Настройки</string>
+    <string name="settings">Настройки</string>
     <string name="check_for_updates">Проверять обновления</string>
     <string name="every_hour">Раз в час</string>
     <string name="every_3_hours">Раз в 3 часа</string>
@@ -20,13 +20,15 @@
     <string name="new_version_available">Доступна новая версия</string>
     <string name="changelog">Список изменений</string>
     <string name="version">Версия</string>
-	<string name="cant_load_changelog">Ошибка загрузки списка изменений</string>
+    <string name="cant_load_changelog">Ошибка загрузки списка изменений</string>
     <string name="show_changelog">Показывать список измеений</string>
-	<string name="version_type">Канал обновлений</string>
-	<string name="stable">Стабильный</string>
-	<string name="beta">Бета</string>
-	<string name="always">Всегда</string>
-	<string name="when_new_version_available">Когда появляется новая версия</string>
-	<string name="refresh">Обновить</string>
-    
+    <string name="version_type">Канал обновлений</string>
+    <string name="stable">Стабильный</string>
+    <string name="beta">Бета</string>
+    <string name="always">Всегда</string>
+    <string name="when_new_version_available">Когда появляется новая версия</string>
+    <string name="refresh">Обновить</string>
+    <string name="checking_for_updates">Проверка обновлений&#8230;</string>
+    <string name="loading_changelog">Загрузка списка изменений&#8230;</string>
+
 </resources>

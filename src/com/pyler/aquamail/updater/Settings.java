@@ -23,6 +23,7 @@ public class Settings extends PreferenceActivity implements
 		prefs.registerOnSharedPreferenceChangeListener(this);
 	}
 
+	@Override
 	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 		if (helper.check_for_updates.equals(key)) {
 			int checkForUpdates = Integer.valueOf(prefs.getString(
