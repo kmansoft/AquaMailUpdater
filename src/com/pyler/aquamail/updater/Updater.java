@@ -244,9 +244,13 @@ public class Updater extends Activity {
 					public void onCompleted(Exception e, String result) {
 						loadingChangelog.dismiss();
 						if (result != null) {
-							changelog = getString(R.string.version) + " "
-									+ latestVersionName + "\n\n";
-							changelog += helper.getChanges(result) + "\n";
+							String changes = helper.getChanges(result);
+							changelog = "";
+							if (!changes.isEmpty()) {
+								changelog += getString(R.string.version) + " "
+										+ latestVersionName + "\n\n";
+								changelog += helper.getChanges(result) + "\n";
+							}
 							changelog += helper.getChangelog(result);
 						} else {
 							changelog = getString(R.string.cant_load_changelog);

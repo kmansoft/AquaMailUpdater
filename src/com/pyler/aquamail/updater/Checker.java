@@ -22,20 +22,22 @@ public class Checker extends BroadcastReceiver {
 	public Helper helper;
 	public SharedPreferences prefs;
 	public int releaseType;
+
 	@Override
 	public void onReceive(final Context context, Intent intent) {
 		helper = new Helper(context);
 		String action = intent.getAction();
-		if (helper.ACTION_NAME.equals(action)) {
-		    prefs = PreferenceManager.getDefaultSharedPreferences(context);
-			releaseType = Integer.valueOf(prefs
-				.getString(helper.version_type, "0"));
+		prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		int checkForUpdates = Integer.valueOf(prefs.getString(
+				helper.check_for_updates, "1"));
+		if (helper.ACTION_NAME.equals(action) && checkForUpdates != -1) {
+			releaseType = Integer.valueOf(prefs.getString(helper.version_type,
+					"0"));
 			String URL;
-			if (releaseType==1) {
-			   URL = helper.URL_VERSION_BETA;
-		    }
-			else {
-			   URL = helper.URL_VERSION;
+			if (releaseType == 1) {
+				URL = helper.URL_VERSION_BETA;
+			} else {
+				URL = helper.URL_VERSION;
 			}
 			installedVersionName = helper.getAquaMailInstalledVersion();
 			Ion.with(context).load(URL).asString()
@@ -43,7 +45,8 @@ public class Checker extends BroadcastReceiver {
 						@Override
 						public void onCompleted(Exception e, String result) {
 							if (result != null) {
-								newVersionName = helper.getLatestVersion(result);
+								newVersionName = helper
+										.getLatestVersion(result);
 								if (!newVersionName
 										.equals(installedVersionName)) {
 									Intent openIntent = new Intent(context,
@@ -64,7 +67,8 @@ public class Checker extends BroadcastReceiver {
 													context.getString(R.string.new_version_available))
 											.setWhen(System.currentTimeMillis())
 											.setContentIntent(pendingIntent)
-											.setSmallIcon(android.R.drawable.stat_sys_download_done)
+											.setSmallIcon(
+													android.R.drawable.stat_sys_download_done)
 											.build();
 
 									notificationManager = (NotificationManager) context
