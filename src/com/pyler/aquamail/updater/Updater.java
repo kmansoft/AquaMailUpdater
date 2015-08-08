@@ -142,13 +142,10 @@ public class Updater extends Activity {
         int releaseType = getVersionType();
         if (releaseType == 0) {
             urlVersion = helper.URL_VERSION_STABLE;
-            versionId = "stable_version";
+            versionId = helper.STABLE_VERSION_ID;
         } else if (releaseType == 1) {
             urlVersion = helper.URL_VERSION_BETA;
-            versionId = "beta_version";
-        } else if (releaseType == 2) {
-            urlVersion = helper.URL_VERSION_BACKUP;
-            versionId = "backup_version";
+            versionId = helper.BETA_VERSION_ID;
         }
         if (urlVersion == null) {
             return;
@@ -278,18 +275,20 @@ public class Updater extends Activity {
     }
 
     public void checkOtherBuilds() {
-        String urlCheckVersion = null;
+        String urlCheckVersion;
         int releaseType = getVersionType();
         if (releaseType == 0) {
             urlCheckVersion = helper.URL_VERSION_BETA;
             versionCheckId = "1";
             versionId = helper.BETA_VERSION_ID;
-        } else if (releaseType == 1) {
+        } else {
             urlCheckVersion = helper.URL_VERSION_STABLE;
             versionCheckId = "0";
             versionId = helper.STABLE_VERSION_ID;
         }
-
+        if (urlCheckVersion == null) {
+            return;
+        }
         Ion.with(this).load(urlCheckVersion).asString()
                 .setCallback(new FutureCallback<String>() {
                     @Override
@@ -317,7 +316,7 @@ public class Updater extends Activity {
         int releaseType = getVersionType();
         if (releaseType == 0) {
             title = getString(R.string.beta);
-        } else if (releaseType == 1) {
+        } else {
             title = getString(R.string.stable);
         }
 

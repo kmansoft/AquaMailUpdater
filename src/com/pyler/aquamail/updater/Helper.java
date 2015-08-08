@@ -14,7 +14,6 @@ public class Helper {
     public String AQUAMAIL_PKG = "org.kman.AquaMail";
     public String URL_VERSION_STABLE = "http://aqua-mail.com/download/xversion-AquaMail-market.txt";
     public String URL_VERSION_BETA = "http://aqua-mail.com/download/xversion-AquaMail-market-beta.txt";
-    public String URL_VERSION_BACKUP = "http://www.aqua-mail.com/download/xversion-AquaMail-marketBackup.txt";
     public String STABLE_VERSION_ID = "stable_version";
     public String BETA_VERSION_ID = "beta_version";
     public String AQUAMAIL_VERSION = "AquaMail %s";
@@ -120,7 +119,7 @@ public class Helper {
         String codeChanges = text.substring(start, end);
         Scanner txt = new Scanner(codeChanges);
         String changes = "";
-        String line = "";
+        String line;
         while (txt.hasNextLine()) {
             line = txt.nextLine();
             if (line.contains(AQUAMAIL_CHANGELOG_TAG)) {

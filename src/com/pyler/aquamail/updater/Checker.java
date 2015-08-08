@@ -33,16 +33,14 @@ public class Checker extends BroadcastReceiver {
         if (helper.ACTION_NAME.equals(action) && checkForUpdates != -1) {
             releaseType = Integer.valueOf(prefs.getString(helper.version_type,
                     "0"));
-            String URL = "";
+            String URL;
             if (releaseType == 0) {
                 URL = helper.URL_VERSION_STABLE;
-            } else if (releaseType == 1) {
+            } else {
                 URL = helper.URL_VERSION_BETA;
-            } else if (releaseType == 2) {
-                URL = helper.URL_VERSION_BACKUP;
             }
 
-            if (URL.isEmpty()) {
+            if (URL == null) {
                 return;
             }
             installedVersionName = helper.getAquaMailInstalledVersion();
