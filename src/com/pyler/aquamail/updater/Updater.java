@@ -295,10 +295,10 @@ public class Updater extends Activity {
                     public void onCompleted(Exception e, String result) {
                         loadingChangelog.dismiss();
                         if (result != null) {
-                            latestVersionName = helper.getLatestVersion(result);
+                            String latestBuildVersionName = helper.getLatestVersion(result);
                             String latestLoadedVersionName = prefs.getString(versionId, "0");
-                            if (!latestVersionName.equals(latestLoadedVersionName)) {
-                                prefs.edit().putString(versionId, latestVersionName).apply();
+                            if (!latestBuildVersionName.equals(latestLoadedVersionName)) {
+                                prefs.edit().putString(versionId, latestBuildVersionName).apply();
                                 showNewOtherBuildDialog(latestVersionName);
                             }
 
@@ -311,7 +311,7 @@ public class Updater extends Activity {
 
     public void showNewOtherBuildDialog(String latestVersionName) {
         newOtherVersionDialog = new AlertDialog.Builder(this);
-        String title = "";
+        String title;
         String msg = getString(R.string.new_version_available) + ": " + latestVersionName;
         int releaseType = getVersionType();
         if (releaseType == 0) {
