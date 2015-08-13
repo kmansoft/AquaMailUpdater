@@ -293,7 +293,6 @@ public class Updater extends Activity {
                 .setCallback(new FutureCallback<String>() {
                     @Override
                     public void onCompleted(Exception e, String result) {
-                        loadingChangelog.dismiss();
                         if (result != null) {
                             String latestBuildVersionName = helper.getLatestVersion(result);
                             String latestLoadedVersionName = prefs.getString(versionId, "0");
