@@ -1,0 +1,54 @@
+buildscript {
+	repositories {
+		jcenter()
+	}
+
+	dependencies {
+		classpath 'com.android.tools.build:gradle:2.2+'
+	}
+}
+
+allprojects {
+	repositories {
+		jcenter()
+	}
+}
+
+apply plugin: 'com.android.application'
+
+dependencies {
+	compile 'com.android.support:support-core-ui:24+'
+	compile 'com.android.support:support-fragment:24+'
+	compile 'com.koushikdutta.ion:ion:2.+'
+}
+
+android {
+	compileSdkVersion 21
+	buildToolsVersion '24.0.3'
+
+    defaultConfig {
+        versionCode 20
+        versionName '2.0'
+    }
+
+	sourceSets {
+		main {
+			manifest.srcFile 'AndroidManifest.xml'
+			java.srcDirs = ['src' ]
+			res.srcDirs = ['res']
+		}
+	}
+
+    signingConfigs {
+        release {
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+			shrinkResources true
+            proguardFile 'proguard-project.txt'
+        }
+	}
+}

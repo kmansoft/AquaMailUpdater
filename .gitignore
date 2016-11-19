@@ -24,3 +24,8 @@ proguard/
 
 # Log Files
 *.log
+
+# Android Studio
+
+AquaMailUpdater.iml
+.idea
