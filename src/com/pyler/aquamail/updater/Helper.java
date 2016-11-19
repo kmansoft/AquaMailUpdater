@@ -105,7 +105,13 @@ public class Helper {
     }
 
     public String getChangelog(String text) {
-        int start = text.indexOf("--- changelog:") + 15;
+		final int startChangeLog = text.indexOf("--- changelog:");
+		if (startChangeLog == -1) {
+			// No scm / changelog, just use the whole thing
+			return text;
+		}
+
+		int start = startChangeLog + 15;
         int end = text.length();
         String changelog = text.substring(start, end);
         changelog = changelog.replaceAll(VERSION_TAG,
@@ -114,8 +120,16 @@ public class Helper {
     }
 
     public String getChanges(String text) {
-        int start = text.indexOf("--- scm log:") + 13;
-        int end = text.indexOf("--- changelog:") - 1;
+		final int startScmLog = text.indexOf("--- scm log:");
+		final int startChangeLog = text.indexOf("--- changelog:");
+
+		if (startScmLog == -1 || startChangeLog == -1 || startScmLog > startChangeLog) {
+			// No scm / changelog, just use the whole thing
+			return text;
+		}
+
+        int start = startScmLog + 13;
+        int end = startChangeLog - 1;
         String codeChanges = text.substring(start, end);
         Scanner txt = new Scanner(codeChanges);
         String changes = "";
