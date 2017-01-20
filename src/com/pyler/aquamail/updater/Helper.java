@@ -26,6 +26,11 @@ public class Helper {
     public String show_changelog = "show_changelog";
     public String version_type = "version_type";
     public String ACTION_NAME = "com.pyler.aquamail.updater.CHECK";
+
+	private static final int SUFFIX_COMMIT_HASH_LEN = 12;
+	private static final String SUFFIX_STABLE = "-stable";
+	private static final String SUFFIX_DEV = "-dev";
+
     public Context context;
 
     public Helper(Context ctx) {
@@ -98,11 +103,24 @@ public class Helper {
     }
 
     public String getLatestVersion(String text) {
-        int start = 16;
-        int end = text.length() - 43;
-        String latestVersion = text.substring(start, end);
-        return latestVersion;
+		final int start = text.indexOf('\t');
+		if (start != -1) {
+			final int end = text.indexOf('\t', start+1);
+			if (start + 1 < end) {
+				return text.substring(start+1, end);
+			}
+		}
+        return "";
     }
+
+	public boolean isUpdate(String newVersion, String installedVersion) {
+		if (!newVersion.equals(installedVersion)) {
+			final String newVersionCleaned = cleanVersionNameForCompare(newVersion);
+			final String installedVersionCleaned = cleanVersionNameForCompare(installedVersion);
+			return !newVersionCleaned.equals(installedVersionCleaned);
+		}
+		return false;
+	}
 
     public String getChangelog(String text) {
 		final int startChangeLog = text.indexOf("--- changelog:");
@@ -156,4 +174,30 @@ public class Helper {
         return changes;
     }
 
+	private String cleanVersionNameForCompare(String version) {
+		// Remove commit hash, should be 12 characters
+		for (int i = version.length() - 1; i >= 0; --i) {
+			final char ch = version.charAt(i);
+			if (ch == '-') {
+				if (version.length() - i >= SUFFIX_COMMIT_HASH_LEN) {
+					version = version.substring(0, i);
+				}
+				break;
+			} else if (ch >= '0' && ch <= '9' || ch >= 'a' && ch <= 'f' || ch >= 'A' && ch <= 'F') {
+				// Valid
+			} else {
+				// Not valid
+				break;
+			}
+		}
+
+		for (String suffix : new String[] {SUFFIX_STABLE, SUFFIX_DEV}) {
+			if (version.endsWith(suffix)) {
+				version = version.substring(0, version.length() - suffix.length());
+				break;
+			}
+		}
+
+		return version;
+	}
 }

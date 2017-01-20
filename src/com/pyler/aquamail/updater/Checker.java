@@ -51,8 +51,7 @@ public class Checker extends BroadcastReceiver {
                             if (result != null) {
                                 newVersionName = helper
                                         .getLatestVersion(result);
-                                if (!newVersionName
-                                        .equals(installedVersionName)) {
+                                if (helper.isUpdate(newVersionName, installedVersionName)) {
                                     Intent openIntent = new Intent(context,
                                             Updater.class);
                                     PendingIntent pendingIntent = PendingIntent
