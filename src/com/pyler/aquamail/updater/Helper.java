@@ -175,6 +175,19 @@ public class Helper {
     }
 
 	private String cleanVersionNameForCompare(String version) {
+		version = removeVersionCommitHash(version);
+
+		for (String suffix : new String[] {SUFFIX_STABLE, SUFFIX_DEV}) {
+			if (version.endsWith(suffix)) {
+				version = version.substring(0, version.length() - suffix.length());
+				break;
+			}
+		}
+
+		return version;
+	}
+
+	private String removeVersionCommitHash(String version) {
 		// Remove commit hash, should be 12 characters
 		for (int i = version.length() - 1; i >= 0; --i) {
 			final char ch = version.charAt(i);
@@ -187,13 +200,6 @@ public class Helper {
 				// Valid
 			} else {
 				// Not valid
-				break;
-			}
-		}
-
-		for (String suffix : new String[] {SUFFIX_STABLE, SUFFIX_DEV}) {
-			if (version.endsWith(suffix)) {
-				version = version.substring(0, version.length() - suffix.length());
 				break;
 			}
 		}
