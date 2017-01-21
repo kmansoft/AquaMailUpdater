@@ -182,7 +182,7 @@ public class Updater extends Activity {
                                     .setText(getString(R.string.latest_version,
                                             latestVersionName));
                             checkOtherBuilds();
-                            if (!latestVersionName.equals(installedVersionName)) {
+                            if (helper.isUpdate(latestVersionName, installedVersionName)) {
                                 downloadButton.setVisibility(View.VISIBLE);
                                 if (getChangelog() == 0) {
                                     showChangelog();
@@ -307,7 +307,7 @@ public class Updater extends Activity {
                         if (result != null) {
                             String latestBuildVersionName = helper.getLatestVersion(result);
                             String latestLoadedVersionName = prefs.getString(versionId, "0");
-                            if (!latestBuildVersionName.equals(latestLoadedVersionName)) {
+                            if (helper.isUpdate(latestBuildVersionName, latestLoadedVersionName)) {
                                 prefs.edit().putString(versionId, latestBuildVersionName).apply();
                                 showNewOtherBuildDialog(latestVersionName);
                             }
