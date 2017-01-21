@@ -174,6 +174,9 @@ public class Helper {
         return changes;
     }
 
+    public String cleanVersionName(String version) {
+        return cleanVersionNameForCompare(version);
+    }
 	private String cleanVersionNameForCompare(String version) {
 		version = removeVersionCommitHash(version);
 

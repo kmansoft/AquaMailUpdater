@@ -174,13 +174,14 @@ public class Updater extends Activity {
                         checkingUpdates.dismiss();
                         if (result != null) {
                             latestVersionName = helper.getLatestVersion(result);
+                            String latestVersionNameCleaned = helper.cleanVersionName(latestVersionName);
                             if (versionId != null) {
                                 prefs.edit().putString(versionId, latestVersionName).apply();
                             }
                             latestVersion.setTextColor(Color.GREEN);
                             latestVersion
                                     .setText(getString(R.string.latest_version,
-                                            latestVersionName));
+                                            latestVersionNameCleaned));
                             checkOtherBuilds();
                             if (helper.isUpdate(latestVersionName, installedVersionName)) {
                                 downloadButton.setVisibility(View.VISIBLE);
