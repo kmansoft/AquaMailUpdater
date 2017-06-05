@@ -8,7 +8,7 @@
     <string name="aquamail_not_installed">AquaMail не установлена.</string>
     <string name="about_info">Автор: pyler\nС благодарностью: Kostya Vasilyev\n\nAquaMail Updater проверяет наличие обновлений AquaMail.\n\nПриложение использует библиотеку <i>ion</i> от разработчика Koushik Dutta.</string>
     <string name="unknown">Неизвестно</string>
-    <string name="download_info">Заргружено %1$s из %2$s</string>
+    <string name="download_info">Загружено %1$s из %2$s</string>
     <string name="settings">Настройки</string>
     <string name="check_for_updates">Проверять обновления</string>
     <string name="every_hour">Раз в час</string>
