@@ -150,7 +150,7 @@ public class Helper {
         int end = startChangeLog - 1;
         String codeChanges = text.substring(start, end);
         Scanner txt = new Scanner(codeChanges);
-        String changes = "";
+        StringBuilder changes = new StringBuilder();
         String line;
         while (txt.hasNextLine()) {
             line = txt.nextLine();
@@ -161,17 +161,17 @@ public class Helper {
                 if (line.startsWith("-")) {
                     line = "+" + line.substring(1, line.length());
                 }
-                changes += line + "\n";
+                changes.append(line).append("\n");
             }
             if (line.startsWith("  ")) {
                 int posStart = 2;
                 int posEnd = line.length();
                 line = "+ " + line.substring(posStart, posEnd);
-                changes += line + "\n";
+                changes.append(line).append("\n");
             }
         }
         txt.close();
-        return changes;
+        return changes.toString();
     }
 
     public String cleanVersionName(String version) {
